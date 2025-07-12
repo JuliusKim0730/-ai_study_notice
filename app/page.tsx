@@ -1,4 +1,20 @@
+'use client'
+
+import { useState } from 'react';
+import SurveyForm from './components/SurveyForm';
+
 export default function Home() {
+  const [showSurveyForm, setShowSurveyForm] = useState(false);
+
+  const handleApplyClick = () => {
+    setShowSurveyForm(true);
+  };
+
+  const handleCurriculumClick = () => {
+    // 커리큘럼 섹션으로 스크롤
+    document.getElementById('curriculum')?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
@@ -9,10 +25,16 @@ export default function Home() {
             PM의 손끝으로 MVP를 만들다 – 코딩 없이 직접 개발하는 4주 실습 스터디
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
+            <button 
+              onClick={handleApplyClick}
+              className="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
+            >
               → 스터디 신청하기
             </button>
-            <button className="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition-colors">
+            <button 
+              onClick={handleCurriculumClick}
+              className="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition-colors"
+            >
               → 커리큘럼 보기
             </button>
           </div>
@@ -86,7 +108,7 @@ export default function Home() {
       </section>
 
       {/* 커리큘럼 섹션 */}
-      <section className="py-20 bg-gray-50">
+      <section id="curriculum" className="py-20 bg-gray-50">
         <div className="max-w-6xl mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-12">📚 커리큘럼</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -168,7 +190,10 @@ export default function Home() {
               </div>
             </div>
             <div className="text-center mt-8">
-              <button className="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors">
+              <button 
+                onClick={handleApplyClick}
+                className="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
+              >
                 → 스터디 신청하기
               </button>
             </div>
@@ -219,6 +244,11 @@ export default function Home() {
           </div>
         </div>
       </footer>
+
+      {/* 설문조사 폼 모달 */}
+      {showSurveyForm && (
+        <SurveyForm onClose={() => setShowSurveyForm(false)} />
+      )}
     </div>
   );
 }
